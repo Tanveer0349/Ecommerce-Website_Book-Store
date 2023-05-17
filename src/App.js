@@ -1,24 +1,43 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Signin from "./user/Signin";
+import Signup from "./user/Signup";
+import Home from "./core/Home";
+import Menu from "./core/Menu";
+import Dashboard from "./core/UserDashboard";
+import { isAdmin, isAuthenticated } from "./auth";
+import AdminDashboard from "./core/AdminDashboard";
+import Protected from "./auth/AdminRoute";
+import CreateCategory from "./admin/CreateCategory";
+import CreateProduct from "./admin/CreateProduct";
+import Shop from "./core/Shop";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Menu />
+      <Routes>
+        <Route
+          path="/admin/dashboard"
+          element={
+            <Protected
+              isAuthenticated={
+                isAdmin()}
+            >
+              <AdminDashboard />
+            </Protected>
+          }
+        />
+        <Route path="/user/dashboard" exact element={<Dashboard />} />
+        <Route path="/create/category" exact element={<CreateCategory />} />
+        <Route path="/create/product" exact element={<CreateProduct />} />
+        <Route path="/signup" exact element={<Signup />} />
+        <Route path="/shop" exact element={<Shop />} />
+
+        <Route path="/signin" exact element={<Signin />} />
+        <Route path="/" exact element={<Home />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
