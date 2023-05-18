@@ -27,7 +27,7 @@ const Search = () => {
   const loadProducts = async () => {
     try {
       const params = {};
-      if (data.search) {
+      if (search) {
         params.search = search;
       }
       if (category !== "All") {
@@ -39,19 +39,15 @@ const Search = () => {
       console.log(err);
     }
   };
-  
 
   const handleChange = (name) => (event) => {
     setData({ ...data, [name]: event.target.value, searched: false });
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    loadProducts({
-      category: category || '',
-      search: search || ''
-    });
+    loadProducts();
   };
-  
+
   const searchForm = () => {
     return (
       <form onSubmit={handleSubmit} className="mb-3">
@@ -83,30 +79,39 @@ const Search = () => {
       </form>
     );
   };
-const searchMessage=(results,searched)=>{
-if(searched && results.length>0){
-  return <p className="alert alert-info text-center mt-4 mb-4">Found ${results.length} Products</p> 
-}
-if(searched && results.length==0){
-  return <p className="alert alert-info text-center mt-4 mb-4">No Products Found</p>
-}
-  }
-  const showProducts=(results=[])=>{
-  return (
-    <div>
-      {searchMessage(results,searched)}
-      <div className="row">
-{results.map((p,i)=>(<Card key={i} product={p}/>))}
-      </div> 
-      </div> 
-    )
-  }
+  const searchMessage = (results, searched) => {
+    if (searched && results.length > 0) {
+      return (
+        <p className="alert alert-info text-center mt-4 mb-4">
+          Found ${results.length} Products
+        </p>
+      );
+    }
+    if (searched && results.length == 0) {
+      return (
+        <p className="alert alert-info text-center mt-3 mb-3">
+          No Products Found
+        </p>
+      );
+    }
+  };
+  const showProducts = (results = []) => {
+    console.log(results);
+    return (
+      <div>
+        {searchMessage(results, searched)}
+        <div className="row">
+          {results.map((p, i) => (
+            <Card key={i} product={p} />
+          ))}
+        </div>
+      </div>
+    );
+  };
   return (
     <div className="row mt-4">
-      <div className="container">
-        {searchForm()}
-        {showProducts(results)}
-      </div>
+      <div className="container mb-3">{searchForm()}</div>
+      <div className="container-fluid mb-3">{(results)? showProducts(results) : ""}</div>
     </div>
   );
 };
