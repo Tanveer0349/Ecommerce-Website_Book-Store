@@ -18,11 +18,6 @@ export const getFilteredProducts = (skip, limit, filters = {}) => {
   return axios.post(`${API}/products/by/search`, data);
 };
 
-// export const getSearchedProducts = (params) => {
-//   const query=queryString.stringify(params);
-//   console.log(query);
-//   return axios.get(`${API}/products/search?${query}`);
-// };
 
 export const getSearchedProducts = (params) => {
   const query=queryString.stringify(params);

@@ -25,16 +25,14 @@ const Search = () => {
   }, []);
 
   const loadProducts = async () => {
-    console.log(data.category,data.search)
     try {
       const params = {};
       if (data.search) {
-        params.search = data.search;
+        params.search = search;
       }
       if (category !== "All") {
-        params.category = data.category;
+        params.category = category;
       }
-  console.log("params",params)
       const response = await getSearchedProducts(params);
       setData({ ...data, results: response.data, searched: true });
     } catch (err) {
@@ -85,20 +83,29 @@ const Search = () => {
       </form>
     );
   };
-  const showProducts=()=>{
-    
-   return (results.length!==0)?  (
+const searchMessage=(results,searched)=>{
+if(searched && results.length>0){
+  return <p className="alert alert-info text-center mt-4 mb-4">Found ${results.length} Products</p> 
+}
+if(searched && results.length==0){
+  return <p className="alert alert-info text-center mt-4 mb-4">No Products Found</p>
+}
+  }
+  const showProducts=(results=[])=>{
+  return (
+    <div>
+      {searchMessage(results,searched)}
       <div className="row">
 {results.map((p,i)=>(<Card key={i} product={p}/>))}
-      </div>
-    ) : <p className="alert alert-info mt-3 mb-3 text-center">No Product Found</p>
-   
+      </div> 
+      </div> 
+    )
   }
   return (
     <div className="row mt-4">
       <div className="container">
         {searchForm()}
-        {showProducts()}
+        {showProducts(results)}
       </div>
     </div>
   );
