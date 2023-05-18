@@ -34,7 +34,9 @@ const Search = () => {
         params.category = category;
       }
       const response = await getSearchedProducts(params);
-      setData({ ...data, results: response.data, searched: true });
+      console.log(data,"response")
+      setData({ ...data, results:response.data, searched: true });
+
     } catch (err) {
       console.log(err);
     }
@@ -44,6 +46,7 @@ const Search = () => {
     setData({ ...data, [name]: event.target.value, searched: false });
   };
   const handleSubmit = (e) => {
+    console.log('Submitted')
     e.preventDefault();
     loadProducts();
   };
@@ -101,8 +104,8 @@ const Search = () => {
       <div>
         {searchMessage(results, searched)}
         <div className="row">
-          {results.map((p, i) => (
-            <Card key={i} product={p} />
+          {results && results.map((p, i) => (
+            <div key={i} className="col-4 mb-4"><Card  product={p} /></div>
           ))}
         </div>
       </div>

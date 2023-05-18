@@ -40,9 +40,9 @@ loadProductsByArrival();
 <h3>Search Bar</h3>
 <Search/>
 <h3 className='mb-4'>New Arrival</h3>
-<div className='row'>{productsByArrival.map((p,i)=>(<Card product={p}/>))}</div>
+<div className='row'>{productsByArrival.map((p,i)=>(<div key={i} className='col-4 mb-4'><Card product={p}/></div>))}</div>
 <h3 className='mb-4'>Best Sellers</h3>
-<div className='row'>{productsBySell.map((p,i)=>(<Card product={p}/>))}</div>
+<div className='row'>{productsBySell.map((p,i)=><div key={i} className='col-4 mb-4'><Card product={p}/></div>)}</div>
     </Layout> );
 }
  

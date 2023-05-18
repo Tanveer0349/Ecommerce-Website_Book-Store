@@ -11,6 +11,7 @@ import Protected from "./auth/AdminRoute";
 import CreateCategory from "./admin/CreateCategory";
 import CreateProduct from "./admin/CreateProduct";
 import Shop from "./core/Shop";
+import Product from "./core/Product";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
         <Route path="/user/dashboard" exact element={<Dashboard />} />
         <Route path="/create/category" exact element={<CreateCategory />} />
         <Route path="/create/product" exact element={<CreateProduct />} />
+        <Route path="/products/:productId" exact element={<Product />} />
         <Route path="/signup" exact element={<Signup />} />
         <Route path="/shop" exact element={<Shop />} />
 

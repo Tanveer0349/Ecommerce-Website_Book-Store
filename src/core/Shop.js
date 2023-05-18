@@ -113,7 +113,11 @@ const Shop = () => {
 
           <div className="row">
             {filteredProducts.map((p, i) => {
-              return <Card key={i} product={p} />;
+              return (
+                <div key={i} className="col-4 mb-4">
+                  <Card product={p} />
+                </div>
+              );
             })}
           </div>
           <hr />
