@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getCategories, getSearchedProducts } from "./apiCore";
+import Card from "./Card";
 const Search = () => {
   const [data, setData] = useState({
     categories: [],
@@ -55,7 +56,7 @@ const Search = () => {
   
   const searchForm = () => {
     return (
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="mb-3">
         <span className="input-group-text">
           <div className="input-group input-group-large">
             <div className="input-group-prepend">
@@ -84,11 +85,20 @@ const Search = () => {
       </form>
     );
   };
+  const showProducts=()=>{
+    
+   return (results.length!==0)?  (
+      <div className="row">
+{results.map((p,i)=>(<Card key={i} product={p}/>))}
+      </div>
+    ) : <p className="alert alert-info mt-3 mb-3 text-center">No Product Found</p>
+   
+  }
   return (
-    <div className="row">
+    <div className="row mt-4">
       <div className="container">
         {searchForm()}
-        {JSON.stringify(results)}
+        {showProducts()}
       </div>
     </div>
   );
