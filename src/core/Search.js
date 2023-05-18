@@ -83,7 +83,7 @@ const Search = () => {
     if (searched && results.length > 0) {
       return (
         <p className="alert alert-info text-center mt-4 mb-4">
-          Found ${results.length} Products
+          Found {results.length} Products
         </p>
       );
     }
