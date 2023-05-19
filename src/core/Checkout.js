@@ -10,7 +10,7 @@ return products.reduce((accumulator,current)=>{
 
 const showCheckoutButton=()=>{
 return(
-isAuthenticated() ? (<button className='btn btn-outline-success'>Checkout</button>) : (<button className='btn btn-outline-primary'><Link to='/signin'>Signin to Checkout</Link></button>)
+isAuthenticated() ? (<button className='btn btn-outline-success mt-4'>Checkout</button>) : (<button className='btn btn-outline-primary mt-4'><Link to='/signin'>Signin to Checkout</Link></button>)
 )
 }
     return ( <>

@@ -1,27 +1,38 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ShowImage from "./ShowImage";
 import moment from "moment/moment";
 import "../styles.css";
-import { addItem,updateQuantity,removeProduct } from "./cartHelpers";
+import { addItem, updateQuantity, removeProduct } from "./cartHelpers";
 
 const Card = ({
   product,
   showViewProductButton = true,
   showCartButton = true,
   showUpdateOpts = false,
-  removeButton=false
+  removeButton = false,
+  run,
+  setRun,
 }) => {
+  const [count, setCount] = useState(product.count);
+  const[redirect,setRedirect]=useState(false);
+  const navigate=useNavigate();
 
-const[count,setCount]=useState(product.count)
-
-const showRemoveButton = (removeButton) => {
-  return (
-    removeButton && (
-        <button onClick={()=>{removeProduct(product._id)}} className="btn btn-outline-danger ml-2 mt-2">Remove Product</button>
-    )
-  );
-};
+  const showRemoveButton = (removeButton) => {
+    return (
+      removeButton && (
+        <button
+          onClick={() => {
+            removeProduct(product._id);
+            setRun(!run);
+          }}
+          className="btn btn-outline-danger ml-2 mt-2"
+        >
+          Remove Product
+        </button>
+      )
+    );
+  };
 
   const showViewButton = (showViewProductButton) => {
     return (
@@ -45,11 +56,7 @@ const showRemoveButton = (removeButton) => {
     );
   };
 
-  const addToCart = () => {
-    addItem(product, () => {
-      console.log("added item to cart");
-    });
-  };
+
 
   const showUpdateButton = (showUpdateOpts) => {
     return (
@@ -58,7 +65,14 @@ const showRemoveButton = (removeButton) => {
           <div className="input group mb-3 mt-2">
             <div className="input-group-prepend">
               <span className="input-group-text">Adjust Quantity</span>
-              <input type="number" className="form-control" value={count} onChange={(event)=>{handleQuantity(event,product._id)}}></input>
+              <input
+                type="number"
+                className="form-control"
+                value={count}
+                onChange={(event) => {
+                  handleQuantity(event, product._id);
+                }}
+              ></input>
             </div>
           </div>
         </div>
@@ -73,12 +87,24 @@ const showRemoveButton = (removeButton) => {
     );
   };
 
-  const handleQuantity=(event,productId)=>{
-    setCount(event.target.value<1 ? 1 : event.target.value);
-    if(event.target.value>=1){
-      updateQuantity(productId,event.target.value)
+  const shouldRedirect=()=>{
+    if(redirect){
+      navigate('/cart')
     }
   }
+  const addToCart = () => {
+    addItem(product, () => {
+setRedirect(true);
+    });
+  };
+
+  const handleQuantity = (event, productId) => {
+    setRun(!run);
+    setCount(event.target.value < 1 ? 1 : event.target.value);
+    if (event.target.value >= 1) {
+      updateQuantity(productId, event.target.value);
+    }
+  };
   return (
     <div className="card">
       <div className="card-header name">{product.name}</div>
@@ -94,6 +120,7 @@ const showRemoveButton = (removeButton) => {
         </p>
         {showStock(product.quantity)}
         <br />
+        {shouldRedirect()}
         {showViewButton(showViewProductButton)}
         {showRemoveButton(removeButton)}
         {showAddToCartButton(showCartButton)}

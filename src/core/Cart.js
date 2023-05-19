@@ -6,12 +6,14 @@ import { Link } from "react-router-dom";
 import Checkout from "./Checkout";
 const Cart = () => {
     const[items,setItems]=useState([]);
+    const[run,setRun]=useState(false);
 
     const showCart=(items)=>{
 return (
     <>
     <h3>Showing {items.length} items in the Shopping Cart </h3>
-    {items.map((p,i)=> <Card product={p} showUpdateOpts={true} removeButton={true} showCartButton={false}/>)}
+    <hr/>
+    {items.map((p,i)=> <Card product={p} showUpdateOpts={true} removeButton={true} showCartButton={false} run={run} setRun={setRun}/>)}
     </>
 )
     };
@@ -20,7 +22,7 @@ return (
 
     useEffect(()=>{
         setItems(cartItems())
-    },[items])
+    },[run])
   return (
     <Layout
       title="Cart Page"
