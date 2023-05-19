@@ -1,6 +1,7 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { isAuthenticated, signout } from "../auth";
+import { totalItems } from "./cartHelpers";
 
 const Menu = () => {
   const location = useLocation();
@@ -41,6 +42,11 @@ const Menu = () => {
               Dashboard
             </Link>
           )}
+        </li>
+        <li className="nav-item">
+          <Link className="nav-link" to="/cart" style={isActive(location, "/cart")}>
+            Cart <sup><small className="badge badge-pill">{totalItems()}</small></sup>
+          </Link>
         </li>
         {!isAuthenticated() && (
           <>

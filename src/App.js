@@ -12,6 +12,7 @@ import CreateCategory from "./admin/CreateCategory";
 import CreateProduct from "./admin/CreateProduct";
 import Shop from "./core/Shop";
 import Product from "./core/Product";
+import Cart from "./core/Cart";
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
         <Route path="/products/:productId" exact element={<Product />} />
         <Route path="/signup" exact element={<Signup />} />
         <Route path="/shop" exact element={<Shop />} />
+        <Route path="/cart" exact element={<Cart />} />
 
         <Route path="/signin" exact element={<Signin />} />
         <Route path="/" exact element={<Home />} />
