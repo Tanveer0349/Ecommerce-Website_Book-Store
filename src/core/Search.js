@@ -13,8 +13,8 @@ const Search = () => {
 
   const loadCategories = async () => {
     try {
-      const response = await getCategories();
-      setData({ ...data, categories: response.data });
+      const { data } = await getCategories();
+      setData({ ...data, categories: data });
     } catch (err) {
       console.log(err.response.data);
     }
@@ -34,9 +34,8 @@ const Search = () => {
         params.category = category;
       }
       const response = await getSearchedProducts(params);
-      console.log(data,"response")
-      setData({ ...data, results:response.data, searched: true });
-
+      console.log(data, "response");
+      setData({ ...data, results: response.data, searched: true });
     } catch (err) {
       console.log(err);
     }
@@ -46,7 +45,7 @@ const Search = () => {
     setData({ ...data, [name]: event.target.value, searched: false });
   };
   const handleSubmit = (e) => {
-    console.log('Submitted')
+    console.log("Submitted");
     e.preventDefault();
     loadProducts();
   };
@@ -58,8 +57,8 @@ const Search = () => {
           <div className="input-group input-group-large">
             <div className="input-group-prepend">
               <select className="btn mr-2" onChange={handleChange("category")}>
-                <option value="All">Select Category</option>
-                {categories.map((c, i) => (
+                <option value="All">All</option>
+                {categories && categories.length>0 && categories.map((c, i) => (
                   <option key={i} value={c._id}>
                     {c.name}
                   </option>
@@ -90,7 +89,7 @@ const Search = () => {
         </p>
       );
     }
-    if (searched && results.length == 0) {
+    if (searched && results.length === 0) {
       return (
         <p className="alert alert-info text-center mt-3 mb-3">
           No Products Found
@@ -104,17 +103,22 @@ const Search = () => {
       <div>
         {searchMessage(results, searched)}
         <div className="row">
-          {results && results.map((p, i) => (
-            <div key={i} className="col-4 mb-4"><Card  product={p} /></div>
-          ))}
+          {results &&
+            results.map((p, i) => (
+              <div key={i} className="col-4 mb-4">
+                <Card product={p} />
+              </div>
+            ))}
         </div>
       </div>
     );
   };
   return (
     <div className="row mt-4">
-      <div className="container mb-3">{searchForm()}</div>
-      <div className="container-fluid mb-3">{(results)? showProducts(results) : ""}</div>
+      <div className="container mb-3">{categories ? searchForm() : ""}</div>
+      <div className="container-fluid mb-3">
+        {results ? showProducts(results) : ""}
+      </div>
     </div>
   );
 };

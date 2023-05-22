@@ -33,7 +33,7 @@ return (
         <div className="col-6">
             {items.length>0 ? showCart(items):noItemsmsg()}
         </div>
-        <div className="col-6"><Checkout products={items}/></div>
+        <div className="col-6"><Checkout run={run} setRun={setRun} products={items}/></div>
       </div>
     </Layout>
   );

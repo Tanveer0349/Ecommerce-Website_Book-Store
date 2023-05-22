@@ -61,4 +61,11 @@ export const removeProduct=(productId)=>{
       })
       localStorage.setItem('cart',JSON.stringify(cart))
   }
+};
+
+export const emptyCart=(next)=>{
+  if (typeof window !== "undefined"){
+    localStorage.removeItem('cart')
+    next()
+  }
 }
