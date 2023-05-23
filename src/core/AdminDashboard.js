@@ -8,13 +8,16 @@ const AdminDashboard = () => {
   const adminLinks = () => {
     return (
       <div className="card mb-5">
-        <h3 className="card-header">User Links</h3>
+        <h3 className="card-header">Admin Links</h3>
         <ul className="list-group">
           <li className="list-group-item">
             <Link to="/create/category"> Create Category </Link>
           </li>
           <li className="list-group-item">
             <Link to="/create/product"> Create Product </Link>
+          </li>
+          <li className="list-group-item">
+            <Link to="/admin/orders"> View Orders </Link>
           </li>
         </ul>
       </div>

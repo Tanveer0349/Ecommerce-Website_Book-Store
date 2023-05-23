@@ -39,6 +39,13 @@ export const getFilteredProducts = (skip, limit, filters = {}) => {
   const data = { skip, limit, filters };
   return axios.post(`${API}/products/by/search`, data);
 };
+export const createOrder = (token,orderData) => {
+  return axios.post(`${API}/order/create`,{order:orderData},{
+    headers:{
+      'token':token
+    }
+  });
+};
 
 
 

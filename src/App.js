@@ -13,6 +13,7 @@ import CreateProduct from "./admin/CreateProduct";
 import Shop from "./core/Shop";
 import Product from "./core/Product";
 import Cart from "./core/Cart";
+import Orders from "./admin/Orders";
 
 function App() {
   return (
@@ -27,6 +28,17 @@ function App() {
                 isAdmin()}
             >
               <AdminDashboard />
+            </Protected>
+          }
+        />
+         <Route
+          path="/admin/orders"
+          element={
+            <Protected
+              isAuthenticated={
+                isAdmin()}
+            >
+              <Orders />
             </Protected>
           }
         />

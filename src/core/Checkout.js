@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { isAuthenticated } from "../auth/index";
 import { Link } from "react-router-dom";
-import { getClientToken, processPayment } from "./apiCore";
+import { createOrder, getClientToken, processPayment } from "./apiCore";
 import DropIn from "braintree-web-drop-in-react";
 import { emptyCart } from "./cartHelpers";
 const Checkout = ({ products,run,setRun }) => {
@@ -49,6 +49,13 @@ const Checkout = ({ products,run,setRun }) => {
      try{
 const {data:result}=await processPayment(token,paymentData);
 setData({...data,success:result.success});
+const orderData={
+  products:products,
+  transaction_id:result.transaction.id,
+  amount:result.transaction.amount,
+  address:data.address
+}
+createOrder(token,orderData);
 emptyCart(()=>console.log('Payment done cart empty'));
 setRun(!run)
      }catch(err){
@@ -58,6 +65,10 @@ setData({...data,error:err.message})
       setData({ ...data, error: err.message });
     }
   };
+
+  const handleAddress=(e)=>{
+setData({...data,address:e.target.value})
+  }
 
   const showError = (error) => {
     return (
@@ -80,6 +91,14 @@ setData({...data,error:err.message})
       <div onBlur={()=>setData({...data,error:''})}>
         {data.clientToken !== null && products.length > 0 ? (
           <div>
+            <div className="form-group mb-3">
+              <label className="text-muted">Delivery Address</label>
+              <textarea onChange={handleAddress}
+              value={data.address}
+              className="form-control"
+              placeholder="Enter your delivery address here..."
+              />
+            </div>
             <DropIn
               options={{
                 authorization: data.clientToken,

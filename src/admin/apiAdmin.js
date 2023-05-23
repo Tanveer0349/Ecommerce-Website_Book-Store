@@ -24,3 +24,26 @@ export const addProduct = (product, token) => {
 export const getCategories = () => {
   return axios.get(`${API}/category`);
 };
+
+export const listOrders = (token) => {
+  return axios.get(`${API}/order/list`,{
+    headers:{
+      'token':token
+    }
+  });
+};
+
+export const listStatusValues = (token) => {
+  return axios.get(`${API}/order/statuses`,{
+    headers:{
+      'token':token
+    }
+  });
+};
+export const updateStatus = (id,status,token) => {
+  return axios.put(`${API}/order/status/${id}`,{status},{
+    headers:{
+      'token':token
+    }
+  });
+};
