@@ -7,10 +7,10 @@ import { useNavigate } from "react-router-dom";
 
 const Signin = () => {
   const navigate=useNavigate();
-  const user=JSON.parse(isAuthenticated());
+  const {user}=JSON.parse(isAuthenticated());
   const [values, setValues] = useState({
-    email: "tanveer@gmail.com",
-    password: "12345",
+    email: "",
+    password: "",
     error: "",
     loading: false,
   });
@@ -21,9 +21,10 @@ const Signin = () => {
     setValues({ ...values, error: false, loading: true });
     try {
       const {data}=await signin({ email, password });
-      const token=JSON.stringify(data);
+      redirector(user);
+      const result=JSON.stringify(data);
 
-      authenticate(token,()=>{
+      authenticate(result,()=>{
         setValues({
           ...values,
           loading: false,
@@ -80,11 +81,11 @@ const Signin = () => {
     if(loading) return <div className="alert alert-info">Loading. . .</div>;
   };
 
-  const redirector = () => {
-    if (user&&user.role===0){
+  const redirector = (user) => {
+    if (user&&user.role==0){
       navigate('/user/dashboard');
     };
-    if (user&&user.role===1){
+    if (user&&user.role==1){
       navigate('/admin/dashboard');
     };
   };
@@ -94,10 +95,11 @@ const Signin = () => {
       description="Signin to Node Ecommerce App"
       className="container col-md-8 offset-md-2"
     >
+      {redirector(user)}
       {showError()}
       {showLoading()}
       {signinForm()}
-      {redirector()}
+      
     </Layout>
   );
 };

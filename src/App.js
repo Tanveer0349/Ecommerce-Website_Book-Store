@@ -4,9 +4,9 @@ import Signin from "./user/Signin";
 import Signup from "./user/Signup";
 import Home from "./core/Home";
 import Menu from "./core/Menu";
-import Dashboard from "./core/UserDashboard";
+import Dashboard from "./user/UserDashboard";
 import { isAdmin, isAuthenticated } from "./auth";
-import AdminDashboard from "./core/AdminDashboard";
+import AdminDashboard from "./user/AdminDashboard";
 import Protected from "./auth/AdminRoute";
 import CreateCategory from "./admin/CreateCategory";
 import CreateProduct from "./admin/CreateProduct";
@@ -14,6 +14,9 @@ import Shop from "./core/Shop";
 import Product from "./core/Product";
 import Cart from "./core/Cart";
 import Orders from "./admin/Orders";
+import Profile from "./user/Profile";
+import ManageProducts from "./admin/ManageProducts";
+import UpdateProduct from "./admin/UpdateProduct";
 
 function App() {
   return (
@@ -23,25 +26,36 @@ function App() {
         <Route
           path="/admin/dashboard"
           element={
-            <Protected
-              isAuthenticated={
-                isAdmin()}
-            >
+            <Protected isAuthenticated={isAdmin()}>
               <AdminDashboard />
             </Protected>
           }
         />
-         <Route
+           <Route
+          path="/admin/product/update/:productId"
+          element={
+            <Protected isAuthenticated={isAdmin()}>
+              <UpdateProduct />
+            </Protected>
+          }
+        />
+        <Route
           path="/admin/orders"
           element={
-            <Protected
-              isAuthenticated={
-                isAdmin()}
-            >
+            <Protected isAuthenticated={isAdmin()}>
               <Orders />
             </Protected>
           }
         />
+         <Route
+          path="/admin/products"
+          element={
+            <Protected isAuthenticated={isAdmin()}>
+              <ManageProducts />
+            </Protected>
+          }
+        />
+        <Route path="/profile/:userId" exact element={<Profile />} />
         <Route path="/user/dashboard" exact element={<Dashboard />} />
         <Route path="/create/category" exact element={<CreateCategory />} />
         <Route path="/create/product" exact element={<CreateProduct />} />

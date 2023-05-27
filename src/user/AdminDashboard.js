@@ -1,5 +1,5 @@
 import React from "react";
-import Layout from "./Layout";
+import Layout from "../core/Layout";
 import { isAuthenticated } from "../auth";
 import { Link } from "react-router-dom";
 const AdminDashboard = () => {
@@ -18,6 +18,9 @@ const AdminDashboard = () => {
           </li>
           <li className="list-group-item">
             <Link to="/admin/orders"> View Orders </Link>
+          </li>
+          <li className="list-group-item">
+            <Link to="/admin/products"> Manage Products </Link>
           </li>
         </ul>
       </div>
